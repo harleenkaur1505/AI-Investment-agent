@@ -13,8 +13,8 @@ export default function RecommendationCard({ recommendation, companyName }) {
   return (
     <div className={`relative overflow-hidden rounded-2xl border p-6 md:p-8 bg-surface transition-all-300 ${
       isInvest 
-        ? 'border-primary-accent/40' 
-        : 'border-border-dark'
+        ? 'border-success-green/25 bg-success-green/[0.01]' 
+        : 'border-error-red/25 bg-error-red/[0.01]'
     }`}>
       {/* Decorative accent gradient (subtle, non-neon, dark) */}
       <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-[0.03] pointer-events-none -mr-20 -mt-20 ${
@@ -38,16 +38,18 @@ export default function RecommendationCard({ recommendation, companyName }) {
 
           <div className="flex items-center gap-3">
             <div className={`p-2.5 rounded-xl ${
-              isInvest ? 'bg-primary-accent text-bg-dark' : 'bg-error-red text-text-primary'
+              isInvest ? 'bg-success-green text-bg-dark' : 'bg-error-red text-text-primary'
             }`}>
               {isInvest ? <ThumbsUp className="w-5 h-5" /> : <ThumbsDown className="w-5 h-5" />}
             </div>
             <div>
-              <div className="text-2xl font-black tracking-tight text-text-primary uppercase">
+              <div className={`text-2xl font-black tracking-tight uppercase ${
+                isInvest ? 'text-success-green' : 'text-error-red'
+              }`}>
                 {decision}
               </div>
               <div className="flex items-center gap-1 text-text-secondary text-[10px] font-medium mt-0.5">
-                <ShieldCheck className="w-3 h-3 text-primary-accent" />
+                <ShieldCheck className="w-3 h-3 text-[#3ab7c9]" />
                 <span>Fact-Checked Metrics</span>
               </div>
             </div>
@@ -86,7 +88,7 @@ export default function RecommendationCard({ recommendation, companyName }) {
                 cy="40"
                 r={radius}
                 className={`transition-all-300 ${
-                  isInvest ? 'stroke-primary-accent' : 'stroke-error-red'
+                  isInvest ? 'stroke-success-green' : 'stroke-error-red'
                 }`}
                 strokeWidth="5"
                 fill="transparent"

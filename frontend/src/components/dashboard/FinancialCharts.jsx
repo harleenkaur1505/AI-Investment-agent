@@ -28,7 +28,7 @@ export default function FinancialCharts({ revenueTrend, financialSnapshot, confi
   const donutValue = confidence || 0;
   const donutData = [
     { name: 'Confidence', value: donutValue, color: '#00E5A0' },
-    { name: 'Remaining', value: 100 - donutValue, color: '#1F2937' },
+    { name: 'Remaining', value: 100 - donutValue, color: '#1B2D35' },
   ];
 
   return (
@@ -63,13 +63,13 @@ export default function FinancialCharts({ revenueTrend, financialSnapshot, confi
                       <stop offset="95%" stopColor="#00E5A0" stopOpacity={0.0}/>
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1F2937" />
-                  <XAxis dataKey="year" tickLine={false} axisLine={false} tick={{ fill: '#94A3B8', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} />
-                  <YAxis tickLine={false} axisLine={false} tick={{ fill: '#94A3B8', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} domain={['auto', 'auto']} tickFormatter={(v) => `$${v}`} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2D35" />
+                  <XAxis dataKey="year" tickLine={false} axisLine={false} tick={{ fill: '#7FA0AB', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} />
+                  <YAxis tickLine={false} axisLine={false} tick={{ fill: '#7FA0AB', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} domain={['auto', 'auto']} tickFormatter={(v) => `$${v}`} />
                   <Tooltip
-                    contentStyle={{ backgroundColor: '#111827', border: '1px solid #1F2937', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)' }}
-                    itemStyle={{ color: '#F9FAFB', fontWeight: 'bold', fontSize: '10px', fontFamily: 'JetBrains Mono' }}
-                    labelStyle={{ color: '#94A3B8', fontSize: '9px', fontWeight: 'bold' }}
+                    contentStyle={{ backgroundColor: '#0E171C', border: '1px solid #1B2D35', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)' }}
+                    itemStyle={{ color: '#E6ECEF', fontWeight: 'bold', fontSize: '10px', fontFamily: 'JetBrains Mono' }}
+                    labelStyle={{ color: '#7FA0AB', fontSize: '9px', fontWeight: 'bold' }}
                     formatter={(val) => [`$${val}`, 'Adjusted Price']}
                   />
                   <Area type="monotone" dataKey="price" stroke="#00E5A0" strokeWidth={1.5} fillOpacity={1} fill="url(#chartColor)" />
@@ -89,13 +89,13 @@ export default function FinancialCharts({ revenueTrend, financialSnapshot, confi
           <div className="h-48 w-full pr-2">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={barData} margin={{ top: 5, right: 5, left: -25, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1F2937" />
-                <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: '#94A3B8', fontSize: 9, fontWeight: 600 }} />
-                <YAxis tickLine={false} axisLine={false} tick={{ fill: '#94A3B8', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} tickFormatter={(v) => `${v}%`} />
+                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#1B2D35" />
+                <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fill: '#7FA0AB', fontSize: 9, fontWeight: 600 }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fill: '#7FA0AB', fontSize: 9, fontFamily: 'JetBrains Mono', fontWeight: 600 }} tickFormatter={(v) => `${v}%`} />
                 <Tooltip
-                  contentStyle={{ backgroundColor: '#111827', border: '1px solid #1F2937', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)' }}
-                  itemStyle={{ color: '#F9FAFB', fontWeight: 'bold', fontSize: '10px', fontFamily: 'JetBrains Mono' }}
-                  labelStyle={{ color: '#94A3B8', fontSize: '9px', fontWeight: 'bold' }}
+                  contentStyle={{ backgroundColor: '#0E171C', border: '1px solid #1B2D35', borderRadius: '8px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.2)' }}
+                  itemStyle={{ color: '#E6ECEF', fontWeight: 'bold', fontSize: '10px', fontFamily: 'JetBrains Mono' }}
+                  labelStyle={{ color: '#7FA0AB', fontSize: '9px', fontWeight: 'bold' }}
                   formatter={(val) => [`${val}%`, 'Value']}
                 />
                 <Bar dataKey="value" radius={[4, 4, 0, 0]} maxBarSize={24}>

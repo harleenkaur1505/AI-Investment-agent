@@ -15,7 +15,7 @@ export default function LoadingProgress({ activeStep }) {
     <div className="w-full max-w-md mx-auto mt-12 p-6 bg-surface border border-border-dark rounded-2xl shadow-md text-left">
       <div className="flex items-center justify-between border-b border-border-dark pb-4 mb-5">
         <h3 className="font-bold text-text-primary text-xs tracking-wider uppercase">AI Agent Execution Pipeline</h3>
-        <PulseLoader size={4} color="#00E5A0" speedMultiplier={0.8} />
+        <PulseLoader size={4} color="#33BFAE" speedMultiplier={0.8} />
       </div>
       
       <div className="space-y-3.5">

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Building, Globe, MapPin, User, Tag, Landmark } from 'lucide-react';
 
 export default function CompanyOverview({ companyOverview }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const {
     name,
     symbol,
@@ -13,6 +15,11 @@ export default function CompanyOverview({ companyOverview }) {
     website,
     exchange
   } = companyOverview;
+
+  const isLong = description && description.length > 250;
+  const displayDescription = isLong && !isExpanded 
+    ? `${description.slice(0, 250)}...` 
+    : description;
 
   return (
     <div className="bg-surface border border-border-dark rounded-2xl p-5 md:p-6 shadow-md text-left">
@@ -100,8 +107,16 @@ export default function CompanyOverview({ companyOverview }) {
         <div className="lg:col-span-2 bg-bg-dark/40 p-4 rounded-xl border border-border-dark flex flex-col justify-start">
           <p className="text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-2.5">Business Profile Description</p>
           <p className="text-xs text-text-secondary leading-relaxed font-medium">
-            {description}
+            {displayDescription}
           </p>
+          {isLong && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="mt-3 text-xs font-bold text-primary-accent hover:underline cursor-pointer text-left w-fit"
+            >
+              {isExpanded ? 'Show Less' : 'Read More'}
+            </button>
+          )}
         </div>
       </div>
     </div>

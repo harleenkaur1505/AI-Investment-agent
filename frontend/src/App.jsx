@@ -19,9 +19,27 @@ function App() {
   const [recentSearches, setRecentSearches] = useState(() => {
     try {
       const stored = localStorage.getItem('recentSearches');
-      return stored ? JSON.parse(stored) : [];
+      return stored ? JSON.parse(stored).slice(0, 6) : [];
     } catch {
       return [];
+    }
+  });
+  const [watchlist, setWatchlist] = useState(() => {
+    try {
+      const stored = localStorage.getItem('terminalWatchlist');
+      if (stored) return JSON.parse(stored).slice(0, 3);
+      
+      const defaultWatchlist = [
+        { symbol: 'AAPL', name: 'Apple Inc.', price: '$215.80', change: '+1.25%', isPositive: true, confidence: 88 },
+        { symbol: 'MSFT', name: 'Microsoft Corp.', price: '$442.20', change: '-0.40%', isPositive: false, confidence: 92 }
+      ];
+      localStorage.setItem('terminalWatchlist', JSON.stringify(defaultWatchlist));
+      return defaultWatchlist;
+    } catch {
+      return [
+        { symbol: 'AAPL', name: 'Apple Inc.', price: '$215.80', change: '+1.25%', isPositive: true, confidence: 88 },
+        { symbol: 'MSFT', name: 'Microsoft Corp.', price: '$442.20', change: '-0.40%', isPositive: false, confidence: 92 }
+      ];
     }
   });
 
@@ -61,8 +79,40 @@ function App() {
       const symbolUpper = (result.companyOverview?.symbol || cleanQuery).toUpperCase();
       setRecentSearches((prev) => {
         const filtered = prev.filter((s) => s.toUpperCase() !== symbolUpper);
-        const updated = [symbolUpper, ...filtered].slice(0, 5);
+        const updated = [symbolUpper, ...filtered].slice(0, 6);
         localStorage.setItem('recentSearches', JSON.stringify(updated));
+        return updated;
+      });
+
+      // Update watchlist dynamically
+      const latestPriceVal = result.revenueTrend && result.revenueTrend.length > 0 
+        ? `$${result.revenueTrend[result.revenueTrend.length - 1].price.toFixed(2)}` 
+        : '$0.00';
+        
+      let changeStr = '+0.00%';
+      let isPositive = true;
+      if (result.revenueTrend && result.revenueTrend.length >= 2) {
+        const prevPrice = result.revenueTrend[result.revenueTrend.length - 2].price;
+        const currentPrice = result.revenueTrend[result.revenueTrend.length - 1].price;
+        if (prevPrice > 0) {
+          const changeVal = ((currentPrice - prevPrice) / prevPrice) * 100;
+          isPositive = changeVal >= 0;
+          changeStr = `${isPositive ? '+' : ''}${changeVal.toFixed(2)}%`;
+        }
+      }
+
+      setWatchlist((prev) => {
+        const newItem = {
+          symbol: symbolUpper,
+          name: result.companyOverview?.name || symbolUpper,
+          price: latestPriceVal,
+          change: changeStr,
+          isPositive: isPositive,
+          confidence: result.recommendation?.confidence || 50
+        };
+        const filtered = prev.filter((item) => item.symbol.toUpperCase() !== symbolUpper);
+        const updated = [newItem, ...filtered].slice(0, 3);
+        localStorage.setItem('terminalWatchlist', JSON.stringify(updated));
         return updated;
       });
 
@@ -94,22 +144,33 @@ function App() {
     }
   };
 
+  const handleLogoClick = () => {
+    setLoading(false);
+    setError(null);
+    setData(null);
+    setActiveStep(1);
+    setIsSidebarOpen(false);
+  };
+
   const loggerDebug = (msg) => {
     console.log(`[App] ${msg}`);
   };
 
   return (
-    <div className="min-h-screen bg-bg-dark text-text-primary flex flex-col font-sans">
+    <div className="h-screen bg-transparent text-text-primary flex flex-col font-sans relative overflow-hidden">
+      {/* Animated Network Background Layer */}
+      <div className="fixed -inset-10 z-0 pointer-events-none bg-cover bg-center bg-no-repeat bg-network-animate" />
       {/* Top Fixed Navbar */}
       <Navbar 
         onRefresh={handleRefresh} 
         currentSymbol={data?.companyOverview?.symbol} 
         isSidebarOpen={isSidebarOpen} 
         onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} 
+        onLogoClick={handleLogoClick}
       />
       
       {/* App Body Layout Container */}
-      <div className="flex flex-1 relative overflow-hidden flex-col md:flex-row">
+      <div className="flex flex-1 relative z-10 overflow-hidden flex-col md:flex-row h-[calc(100vh-4rem)]">
         
         {/* Left Sidebar Drawer */}
         <div className={`
@@ -122,6 +183,7 @@ function App() {
             recentSearches={recentSearches} 
             selectedSymbol={data?.companyOverview?.symbol} 
             onSelectSymbol={handleSelectSymbol} 
+            watchlist={watchlist}
           />
         </div>
 
@@ -134,10 +196,10 @@ function App() {
         )}
 
         {/* Main Center content and Right AI Summary panel */}
-        <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto">
+        <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
           
           {/* Main Dashboard (Middle Panel) */}
-          <main className="flex-1 px-4 py-6 md:p-6 space-y-6 max-w-4xl w-full mx-auto">
+          <main className="flex-1 px-4 py-6 md:p-6 space-y-6 max-w-4xl w-full mx-auto overflow-y-auto h-full">
             {/* Empty State: Prompt search first */}
             {!loading && !error && !data && (
               <div className="py-8">

@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
 import { Search, History, Star, Shield, ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
-const WATCHLIST_ITEMS = [
-  { symbol: 'AAPL', name: 'Apple Inc.', price: '$215.80', change: '+1.25%', isPositive: true, confidence: 88 },
-  { symbol: 'MSFT', name: 'Microsoft Corp.', price: '$442.20', change: '-0.40%', isPositive: false, confidence: 92 }
-];
-
 export default function Sidebar({ 
   onSearch, 
   isLoading, 
   recentSearches, 
   selectedSymbol,
-  onSelectSymbol
+  onSelectSymbol,
+  watchlist = []
 }) {
   const [query, setQuery] = useState('');
 
@@ -23,7 +19,7 @@ export default function Sidebar({
   };
 
   return (
-    <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-border-dark bg-surface flex flex-col shrink-0">
+    <aside className="w-full md:w-64 border-b md:border-b-0 md:border-r border-border-dark bg-[#0E171C]/25 backdrop-blur-md flex flex-col shrink-0">
       
       {/* Sidebar Search Section */}
       <div className="p-4 border-b border-border-dark">
@@ -41,58 +37,60 @@ export default function Sidebar({
       </div>
 
       {/* Watchlist Section */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-5">
-        <div>
-          <div className="flex items-center gap-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-3">
-            <Star className="w-3.5 h-3.5 text-primary-accent fill-primary-accent/10" />
-            <span>Terminal Watchlist</span>
-          </div>
-          
-          <div className="space-y-2.5">
-            {WATCHLIST_ITEMS.map((item) => {
-              const isSelected = selectedSymbol?.toUpperCase() === item.symbol;
-              return (
-                <button
-                  key={item.symbol}
-                  onClick={() => onSelectSymbol(item.symbol)}
-                  disabled={isLoading}
-                  className={`w-full text-left p-3 rounded-xl border transition-all-300 flex flex-col gap-1.5 cursor-pointer ${
-                    isSelected
-                      ? 'border-primary-accent bg-primary-accent/5'
-                      : 'border-border-dark hover:border-text-secondary bg-bg-dark/50'
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono font-bold text-sm tracking-tight text-text-primary">
-                      {item.symbol}
-                    </span>
-                    <span className="text-[10px] text-text-secondary font-semibold max-w-[100px] truncate text-right">
-                      {item.name}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs font-semibold text-text-primary">
-                      {item.price}
-                    </span>
-                    <div className="flex items-center gap-2">
-                      <span className={`font-mono text-xs font-bold flex items-center ${
-                        item.isPositive ? 'text-success-green' : 'text-error-red'
-                      }`}>
-                        {item.isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
-                        {item.change}
+      <div className="flex-1 p-4 space-y-5">
+        {watchlist && watchlist.length > 0 && (
+          <div>
+            <div className="flex items-center gap-1.5 text-[10px] font-bold text-text-secondary uppercase tracking-widest mb-3">
+              <Star className="w-3.5 h-3.5 text-primary-accent fill-primary-accent/10" />
+              <span>Terminal Watchlist</span>
+            </div>
+            
+            <div className="space-y-2.5">
+              {watchlist.map((item) => {
+                const isSelected = selectedSymbol?.toUpperCase() === item.symbol;
+                return (
+                  <button
+                    key={item.symbol}
+                    onClick={() => onSelectSymbol(item.symbol)}
+                    disabled={isLoading}
+                    className={`w-full text-left p-3 rounded-xl border transition-all-300 flex flex-col gap-1.5 cursor-pointer ${
+                      isSelected
+                        ? 'border-primary-accent bg-primary-accent/5'
+                        : 'border-border-dark hover:border-text-secondary bg-bg-dark/50'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono font-bold text-sm tracking-tight text-text-primary">
+                        {item.symbol}
                       </span>
-                      <span className="text-[9px] bg-secondary-accent/10 text-secondary-accent border border-secondary-accent/20 px-1.5 py-0.5 rounded-md font-semibold tracking-wider flex items-center gap-0.5">
-                        <Shield className="w-2.5 h-2.5" />
-                        <span className="font-mono">{item.confidence}%</span>
+                      <span className="text-[10px] text-text-secondary font-semibold max-w-[100px] truncate text-right">
+                        {item.name}
                       </span>
                     </div>
-                  </div>
-                </button>
-              );
-            })}
+
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs font-semibold text-text-primary">
+                        {item.price}
+                      </span>
+                      <div className="flex items-center gap-2">
+                        <span className={`font-mono text-xs font-bold flex items-center ${
+                          item.isPositive ? 'text-success-green' : 'text-error-red'
+                        }`}>
+                          {item.isPositive ? <ArrowUpRight className="w-3 h-3" /> : <ArrowDownRight className="w-3 h-3" />}
+                          {item.change}
+                        </span>
+                        <span className="text-[9px] bg-secondary-accent/10 text-secondary-accent border border-secondary-accent/20 px-1.5 py-0.5 rounded-md font-semibold tracking-wider flex items-center gap-0.5">
+                          <Shield className="w-2.5 h-2.5" />
+                          <span className="font-mono">{item.confidence}%</span>
+                        </span>
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Recent Searches Section */}
         {recentSearches && recentSearches.length > 0 && (

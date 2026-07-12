@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TrendingUp, RefreshCw, Calendar, Menu, X, ShieldCheck } from 'lucide-react';
 
-export default function Navbar({ onRefresh, currentSymbol, isSidebarOpen, onToggleSidebar }) {
+export default function Navbar({ onRefresh, currentSymbol, isSidebarOpen, onToggleSidebar, onLogoClick }) {
   const [marketStatus, setMarketStatus] = useState({ open: false, label: 'US Market Closed' });
   const [currentDate, setCurrentDate] = useState('');
 
@@ -58,7 +58,7 @@ export default function Navbar({ onRefresh, currentSymbol, isSidebarOpen, onTogg
   }, []);
 
   return (
-    <header className="sticky top-0 z-50 bg-surface border-b border-border-dark px-4 md:px-6 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#0E171C]/35 backdrop-blur-md border-b border-border-dark px-4 md:px-6 h-16 flex items-center justify-between">
       <div className="flex items-center gap-3">
         {/* Mobile Sidebar Hamburger Toggle */}
         <button
@@ -69,29 +69,27 @@ export default function Navbar({ onRefresh, currentSymbol, isSidebarOpen, onTogg
           {isSidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
         </button>
 
-        <div className="bg-primary-accent/10 p-1.5 rounded-lg text-primary-accent border border-primary-accent/20">
-          <TrendingUp className="w-4 h-4" />
-        </div>
-        <div className="flex items-baseline gap-2">
-          <span className="font-semibold text-text-primary tracking-tight text-sm md:text-base">
-            AI Investment Research Terminal
-          </span>
-          <span className="hidden lg:inline-flex items-center gap-1 bg-secondary-accent/10 text-secondary-accent text-[10px] font-bold px-2 py-0.5 rounded-full border border-secondary-accent/20">
-            <ShieldCheck className="w-3 h-3" />
-            SEC FACT-CHECKED
-          </span>
+        <div 
+          onClick={onLogoClick}
+          className="flex items-center gap-3 cursor-pointer select-none group"
+          title="Return to Landing Page"
+        >
+          <div className="p-1 rounded-lg text-primary-accent border border-primary-accent/10 group-hover:bg-primary-accent/10 transition-all-300">
+            <img src="/investra_logo.png" className="w-5 h-5 object-contain rounded-md" alt="InvestraAI Logo" />
+          </div>
+          <div className="flex items-baseline gap-2">
+            <span className="font-semibold text-text-primary tracking-tight text-xs sm:text-sm md:text-base group-hover:text-primary-accent transition-all-300">
+              InvestraAI
+            </span>
+            <span className="hidden lg:inline-flex items-center gap-1 bg-[#13323e]/50 text-[#3ab7c9] text-[10px] font-bold px-2 py-0.5 rounded-full border border-[#1b4352]">
+              <ShieldCheck className="w-3 h-3" />
+              SEC FACT-CHECKED
+            </span>
+          </div>
         </div>
       </div>
 
       <div className="flex items-center gap-4">
-        {/* Dynamic US Market Status Badge */}
-        <div className="flex items-center gap-1.5">
-          <span className={`w-2 h-2 rounded-full ${marketStatus.open ? 'bg-success-green animate-pulse' : 'bg-error-red'}`} />
-          <span className="text-[10px] text-text-secondary font-bold uppercase tracking-wider hidden sm:inline-block">
-            {marketStatus.label}
-          </span>
-        </div>
-
         {/* Current Date Display */}
         <div className="hidden md:flex items-center gap-1.5 text-xs text-text-secondary font-medium">
           <Calendar className="w-3.5 h-3.5" />

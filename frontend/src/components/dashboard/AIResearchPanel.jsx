@@ -8,8 +8,8 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
   // 1. Loading State
   if (isLoading) {
     return (
-      <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-surface p-5 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-y-auto flex flex-col justify-between">
-        <div className="space-y-6">
+      <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-[#0E171C]/25 backdrop-blur-md pt-3 pb-3 px-4 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-hidden flex flex-col justify-between">
+        <div className="space-y-4">
           <div className="flex items-center justify-between border-b border-border-dark pb-4">
             <h3 className="font-bold text-text-primary text-sm tracking-tight flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
@@ -69,8 +69,8 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
     const weaknesses = data.swotAnalysis?.weaknesses || [];
 
     return (
-      <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-surface p-5 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-y-auto flex flex-col justify-between text-left">
-        <div className="space-y-6">
+      <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-[#0E171C]/25 backdrop-blur-md pt-3 pb-3 px-4 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-hidden flex flex-col justify-between text-left">
+        <div className="space-y-3.5">
           <div className="flex items-center justify-between border-b border-border-dark pb-4">
             <h3 className="font-bold text-text-primary text-sm tracking-tight flex items-center gap-2">
               <Sparkles className="w-4 h-4 text-primary-accent" />
@@ -133,7 +133,7 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
               <ul className="space-y-1.5">
                 {weaknesses.slice(0, 2).map((item, idx) => (
                   <li key={idx} className="flex items-start gap-2 text-xs text-text-primary font-medium leading-relaxed">
-                    <ShieldAlert className="w-3.5 h-3.5 text-highlight-accent shrink-0 mt-0.5" />
+                    <ShieldAlert className="w-3.5 h-3.5 text-error-red shrink-0 mt-0.5" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -142,7 +142,7 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
           </div>
         </div>
 
-        <div className="mt-6 pt-4 border-t border-border-dark">
+        <div className="mt-4 pt-3 border-t border-border-dark">
           <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider block mb-1">Final AI Verdict</span>
           <p className="text-xs text-text-secondary leading-relaxed font-medium">
             {summary}
@@ -154,8 +154,8 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
 
   // 3. Idle / Empty State
   return (
-    <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-surface p-5 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-y-auto flex flex-col justify-between text-left">
-      <div className="space-y-6">
+    <aside className="w-full lg:w-80 shrink-0 border-t lg:border-t-0 lg:border-l border-border-dark bg-[#0E171C]/25 backdrop-blur-md pt-3 pb-3 px-4 lg:sticky lg:top-16 lg:h-[calc(100vh-4rem)] overflow-hidden flex flex-col justify-between text-left">
+      <div className="space-y-4">
         <div className="flex items-center justify-between border-b border-border-dark pb-4">
           <h3 className="font-bold text-text-primary text-sm tracking-tight flex items-center gap-2">
             <Sparkles className="w-4 h-4 text-text-secondary" />
@@ -197,7 +197,7 @@ export default function AIResearchPanel({ data, isLoading, activeStep }) {
         </div>
       </div>
 
-      <div className="mt-6 pt-4 border-t border-border-dark">
+      <div className="mt-4 pt-3 border-t border-border-dark">
         <span className="text-[10px] font-bold text-text-secondary uppercase tracking-wider">Final AI Verdict</span>
         <p className="text-xs text-text-secondary leading-relaxed mt-1">
           Submit a ticker query in the search field or click a watchlist company to compute immediate agent reasoning.

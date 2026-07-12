@@ -33,13 +33,13 @@ export default function SearchInput({ onSearch, isLoading }) {
               if (e.target.value.trim()) setError('');
             }}
             disabled={isLoading}
-            className="w-full pl-11 pr-4 py-3 bg-surface border border-border-dark rounded-xl text-text-primary placeholder-text-secondary focus:outline-hidden focus:border-primary-accent focus:ring-2 focus:ring-primary-accent/15 transition-all-300 disabled:bg-bg-dark disabled:text-text-secondary text-xs shadow-xs"
+            className="w-full pl-11 pr-4 py-3 bg-[#09151B] border border-[#1b2d35] rounded-xl text-text-primary placeholder-text-secondary focus:outline-hidden focus:border-[#33bfae] focus:ring-2 focus:ring-[#33bfae]/15 transition-all-300 disabled:bg-[#050C0F] disabled:text-text-secondary text-xs shadow-xs"
           />
         </div>
         <button
           type="submit"
           disabled={isLoading}
-          className="bg-primary-accent hover:brightness-110 text-bg-dark font-bold px-5 py-3 rounded-xl flex items-center gap-1.5 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed transition-all-300 text-xs shrink-0"
+          className="bg-[#33bfae] hover:bg-[#2cb2a2] text-black font-bold px-5 py-3 rounded-xl flex items-center gap-1.5 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed transition-all-300 text-xs shrink-0 font-sans"
         >
           {isLoading ? (
             <>
