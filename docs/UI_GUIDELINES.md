@@ -1,390 +1,380 @@
-# UI GUIDELINES
+# UI_GUIDELINES.md
 
-> ## AI Development Instruction
->
-> Read the following documents before generating any frontend code:
->
-> 1. PROJECT_OVERVIEW.md
-> 2. ARCHITECTURE_GUIDE.md
-> 3. DEVELOPMENT_RULES.md
-> 4. UI_GUIDELINES.md
->
-> This document defines the visual identity of the application.
->
-> Follow these guidelines consistently throughout the project.
->
-> Do not introduce a different design language.
+# InvestraAI – User Interface Guidelines
+
+## Purpose
+
+This document defines the visual design language for InvestraAI.
+
+The objective is to create a modern, premium AI-powered investment research platform that immediately impresses recruiters while maintaining excellent usability and readability.
+
+The interface should resemble a production-ready fintech SaaS application rather than a traditional student project.
 
 ---
 
 # Design Philosophy
 
-The application should resemble a professional AI-powered Investment Research Terminal rather than a traditional dashboard.
+The interface should communicate:
 
-The overall experience should feel similar to platforms like:
+- Intelligence
+- Trust
+- Professionalism
+- Modern AI Technology
+- Financial Analytics
 
-- Bloomberg Terminal
-- TradingView
-- Koyfin
-- Finviz
-- Yahoo Finance Professional
-
-This is an AI research application, not a stock trading platform.
-
-The interface should communicate trust, speed, and professionalism.
+Every design decision should reinforce that InvestraAI is an AI-powered investment intelligence platform.
 
 ---
 
-# Overall Design Goals
+# Overall Visual Style
 
-The UI should feel:
+The application should follow a premium dark theme inspired by modern fintech products.
 
-- Professional
-- Premium
-- Data-dense
-- AI-first
-- Financial
-- Modern
-- Minimal
-- Fast
+Design characteristics:
 
-Avoid playful or colorful SaaS designs.
+- Clean layouts
+- Floating cards
+- Rounded corners
+- Soft shadows
+- Premium spacing
+- Glassmorphism elements
+- Minimal visual clutter
+- High information density without overwhelming the user
 
-The application should look like software used by financial analysts.
-
----
-
-# Color Palette
-
-## Background
-
-Very Dark
-
-```
-#090B0F
-```
+The interface should feel modern, elegant, and enterprise-ready.
 
 ---
 
-## Surface Cards
+# Layout Structure
+
+The application uses a three-column dashboard.
 
 ```
-#111827
+------------------------------------------------------------
+
+│ Sidebar │ Main Dashboard │ AI Research Panel │
+
+------------------------------------------------------------
 ```
 
----
-
-## Primary Accent
-
-Electric Teal
-
-```
-#00E5A0
-```
-
----
-
-## Secondary Accent
-
-Purple
-
-```
-#6D5EF5
-```
-
----
-
-## Highlight Accent
-
-Pink
-
-```
-#F44B9A
-```
-
----
-
-## Success
-
-```
-#00E676
-```
-
----
-
-## Error
-
-```
-#FF5252
-```
-
----
-
-## Warning
-
-```
-#F59E0B
-```
-
----
-
-## Borders
-
-```
-#1F2937
-```
-
----
-
-## Text
-
-Primary
-
-```
-#F9FAFB
-```
-
-Secondary
-
-```
-#94A3B8
-```
-
----
-
-# Typography
-
-Use modern clean fonts.
-
-Recommended:
-
-- Inter
-- JetBrains Mono (numbers only)
-
-Use JetBrains Mono only for:
-
-- Prices
-- Financial values
-- Percentages
-- Tickers
-
-Everything else should use Inter.
-
----
-
-# Application Layout
-
-The application should remain a Single Page Application.
-
-The overall layout should consist of three major sections.
-
-```
--------------------------------------------------------
-
-Top Navigation
-
--------------------------------------------------------
-
-Sidebar
-
-|
-
-Main Dashboard
-
-|
-
-AI Research Panel
-
--------------------------------------------------------
-```
-
----
-
-# Top Navigation
-
-Contains:
-
-- Application Logo
-- Application Name
-- Market Status
-- Current Date
-- Refresh Button
-
-The navigation should remain fixed.
+All three sections should remain visually balanced.
 
 ---
 
 # Left Sidebar
 
-The sidebar should provide quick navigation and company selection.
+The left sidebar acts as the primary navigation panel.
 
-Include:
+Display:
 
-- Search Box
+- InvestraAI Logo
+- Navigation
+- Search
 - Recent Searches
-- Watchlist
+- Popular Companies
 
-Each watchlist item should display:
+The sidebar should remain fixed while the main content scrolls.
 
-- Company Symbol
-- Company Name
-- Current Price
-- Daily Percentage Change
-- AI Confidence Score
-
-Highlight the selected company.
+Use a dark opaque background for maximum contrast.
 
 ---
 
 # Main Dashboard
 
-The main dashboard should contain the following sections.
+The main dashboard contains all company analysis.
 
-## Recommendation Card
+Display sections in the following order:
 
-Large hero card displayed first.
+1. AI Recommendation
+2. Executive Summary
+3. Company Overview
+4. Financial Snapshot
+5. Charts
+6. Company News
+7. SWOT Analysis
+8. Risk Assessment
+9. AI Reasoning
 
-Contains:
+Cards should have generous spacing and consistent alignment.
+
+---
+
+# Right Panel
+
+The right panel serves as the AI Research Assistant.
+
+Display:
+
+- Analysis Status
+- Confidence Score
+- Positive Drivers
+- Risk Drivers
+- AI Insights
+- Final Recommendation
+
+Keep this panel fixed while scrolling.
+
+---
+
+# Background
+
+Use the AI-inspired background image throughout the application.
+
+Requirements:
+
+- Full-screen background image
+- Fixed position
+- Dark overlay for readability
+- Background should remain subtle
+- Never interfere with text visibility
+
+The background should create depth without distracting from the content.
+
+---
+
+# Color Palette
+
+Primary Background
+
+```
+#0A0F1C
+```
+
+Secondary Background
+
+```
+#111827
+```
+
+Sidebar
+
+```
+#0B1220
+```
+
+Cards
+
+```
+rgba(22, 27, 40, 0.88)
+```
+
+Primary Accent
+
+Purple
+
+```
+#7C3AED
+```
+
+Secondary Accent
+
+Blue
+
+```
+#3B82F6
+```
+
+Highlight
+
+Cyan
+
+```
+#22D3EE
+```
+
+Positive
+
+Green
+
+```
+#22C55E
+```
+
+Negative
+
+Red
+
+```
+#EF4444
+```
+
+Warning
+
+Amber
+
+```
+#F59E0B
+```
+
+Avoid bright or oversaturated colors.
+
+Maintain a consistent premium appearance.
+
+---
+
+# Recommendation Cards
+
+The recommendation card should be the visual focal point.
+
+Display:
 
 - Invest / Pass
 - Confidence Score
-- AI Summary
-- Company Name
+- Executive Summary
 
-This should be the most visually prominent component.
+Use:
 
----
+Green badge for
 
-## Financial Metrics
+```
+INVEST
+```
 
-Display compact metric cards.
+Red badge for
 
-Examples:
+```
+PASS
+```
 
-- Market Cap
-- Revenue
-- EPS
-- P/E Ratio
-- Dividend Yield
-- 52 Week High
-- 52 Week Low
-
----
-
-## Financial Charts
-
-Use Recharts.
-
-Maximum:
-
-3–4 charts.
-
-Recommended:
-
-- Line Chart
-- Bar Chart
-- Donut Chart
-
-Charts should support the financial story rather than overwhelm the interface.
-
----
-
-## Latest News
-
-Display up to five news cards.
-
-Each card should contain:
-
-- Headline
-- Source
-- Published Date
-- Short Summary
-
----
-
-## SWOT Analysis
-
-Display four independent cards.
-
-- Strengths
-- Weaknesses
-- Opportunities
-- Threats
-
----
-
-## Risk Analysis
-
-Display AI-generated risks.
-
-Separate into:
-
-- Financial Risk
-- Market Risk
-- Business Risk
-
----
-
-# Right AI Research Panel
-
-Instead of an AI chatbot, implement an AI Research Summary panel.
-
-This panel should remain visible throughout the analysis.
-
-Include:
-
-- Analysis Status
-- Recommendation
-- Confidence Score
-- Top Positive Factors
-- Top Risk Factors
-- Final AI Verdict
-
-This panel should summarize the complete analysis in a concise format.
-
----
-
-# Cards
-
-Every section should use reusable cards.
-
-Cards should have:
-
-- Dark background
-- Rounded corners
-- Thin border
-- Soft shadow
-- Consistent spacing
-
-Maintain uniform card heights where appropriate.
+Confidence should be visualized using a circular progress indicator.
 
 ---
 
 # Charts
 
-Use Recharts.
+Charts should be colorful while remaining professional.
 
-Recommended:
+Recommended colors:
 
-- Revenue Trend → Line Chart
-- Financial Comparison → Bar Chart
-- Confidence Score → Donut Chart
+Purple
 
-Do not add charts without meaningful data.
+Blue
+
+Cyan
+
+Green
+
+Pink
+
+Orange
+
+Avoid monochromatic charts.
+
+Charts should include:
+
+- Smooth animations
+- Hover tooltips
+- Rounded corners
+- Responsive resizing
 
 ---
 
-# Icons
+# Company Overview
 
-Use Lucide React.
+Present information using clean information cards.
 
-Icons should:
+Display:
 
-- Be minimal
-- Use consistent sizing
-- Support readability
+- CEO
+- Industry
+- Sector
+- Headquarters
+- Exchange
 
-Avoid decorative icons.
+Use icons wherever appropriate.
+
+---
+
+# Financial Snapshot
+
+Display financial metrics using compact metric cards.
+
+Examples:
+
+- Revenue
+- Market Cap
+- EPS
+- P/E Ratio
+- Revenue Growth
+
+Each card should include:
+
+- Label
+- Value
+- Small icon
+
+---
+
+# News Section
+
+Only display articles directly related to the selected company.
+
+Each article should include:
+
+- Headline
+- Source
+- Published Date
+- Summary
+- External Link
+
+Cards should maintain consistent spacing.
+
+---
+
+# SWOT Analysis
+
+Display SWOT using four separate cards.
+
+Strengths
+
+Weaknesses
+
+Opportunities
+
+Threats
+
+Each card should have:
+
+- Icon
+- Color accent
+- Clear heading
+- Bullet points
+
+---
+
+# Risk Assessment
+
+Display:
+
+- Financial Risk
+- Business Risk
+- Market Risk
+
+Each risk category should appear inside a dedicated card.
+
+---
+
+# Typography
+
+Use a modern sans-serif font.
+
+Headings:
+
+Large
+
+Bold
+
+High contrast
+
+Body text:
+
+Readable
+
+Comfortable spacing
+
+Financial values:
+
+Use a monospace font for consistency.
 
 ---
 
@@ -392,100 +382,41 @@ Avoid decorative icons.
 
 Buttons should have:
 
-- Rounded corners
-- Electric teal primary color
-- Hover animation
-- Loading state
-- Disabled state
+Rounded corners
 
-Primary buttons should stand out without being oversized.
+Gradient background
 
----
+Smooth hover animation
 
-# Search Experience
+Soft shadows
 
-The search bar should be prominent and easy to access.
+Clear focus state
 
-During analysis:
+Primary action:
 
-- Disable the search button
-- Display loading progress
-- Prevent duplicate requests
+Analyze
+
+Secondary actions:
+
+Read Article
+
+Retry
+
+Refresh
 
 ---
 
 # Loading Experience
 
-Display a professional loading workflow.
+Display a premium AI execution pipeline.
 
-Example:
+Include:
 
-✓ Fetching Company Information
-
-✓ Retrieving Financial Data
-
-✓ Fetching Latest News
-
-✓ Preparing AI Analysis
-
-✓ Generating Investment Recommendation
-
-Never display a blank loading screen.
-
----
-
-# Empty State
-
-Before any company is searched:
-
-Display:
-
-- Welcome Message
-- Application Description
-- Search Box
-
-Hide all dashboard sections until valid results are available.
-
----
-
-# Company Not Found State
-
-If the company cannot be validated:
-
-Display a professional error card.
-
-Example:
-
-⚠ Company Not Found
-
-"We couldn't find a publicly listed company with this name."
-
-Hide:
-
-- Recommendation
-- Charts
-- Financial Metrics
-- SWOT
-- Risk Analysis
-- AI Summary
-
-Do not generate AI analysis for invalid companies.
-
----
-
-# Responsiveness
-
-The application must work on:
-
-- Desktop
-- Tablet
-- Mobile
-
-On smaller screens:
-
-- Sidebar collapses
-- AI Research Panel moves below the dashboard
-- Charts resize automatically
+- Progress bar
+- Current processing step
+- Loading animation
+- Estimated completion
+- Smooth transition into dashboard
 
 ---
 
@@ -493,60 +424,55 @@ On smaller screens:
 
 Use subtle animations only.
 
-Allowed:
+Include:
 
-- Fade In
-- Hover Effects
-- Smooth Transitions
+- Card hover
+- Fade transitions
+- Button hover
+- Progress animations
+- Chart loading
+- Smooth page transitions
 
-Avoid:
-
-- Bounce
-- Flashing
-- Heavy Motion
-- Complex Animations
+Avoid excessive motion.
 
 ---
 
-# Things To Avoid
+# Responsive Design
 
-Do NOT implement:
+Desktop-first.
 
-- Glassmorphism
-- Bootstrap
-- Material UI
-- Neon effects
-- Excessive gradients
-- Unnecessary charts
-- Portfolio Management
-- AI Chatbot
-- Trading Interface
+Support:
 
-Maintain a clean and professional financial application.
+- Desktop
+- Laptop
+- Tablet
+- Mobile
 
----
+Cards should stack naturally on smaller screens.
 
-# Final UI Goal
-
-The finished application should immediately communicate:
-
-"This is a professional AI Investment Research Platform."
-
-The interface should be visually impressive while remaining clean, readable, and focused on investment analysis.
-
-The recruiter should feel that the application resembles a real financial research product rather than a college project.
+Sidebars should collapse gracefully.
 
 ---
 
-# AI Reminder
+# Accessibility
 
-When generating UI:
+Maintain:
 
-- Follow this design guide exactly.
-- Build reusable components.
-- Maintain visual consistency.
-- Prioritize readability.
-- Use the specified color palette.
-- Use Recharts for charts.
-- Use Lucide React for icons.
-- Do not change the overall layout without explicit instruction.
+- High contrast
+- Readable typography
+- Keyboard accessibility
+- Visible focus indicators
+
+Avoid color-only indicators.
+
+---
+
+# Final User Experience
+
+The finished interface should immediately communicate:
+
+"This is a premium AI-powered investment intelligence platform."
+
+The UI should feel comparable to modern SaaS products built for financial analysts, combining elegant design with clear data visualization.
+
+The emphasis should always remain on readability, usability, and professionalism rather than excessive visual effects.

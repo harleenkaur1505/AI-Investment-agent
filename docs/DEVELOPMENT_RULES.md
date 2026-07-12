@@ -1,175 +1,413 @@
-# DEVELOPMENT RULES
+# DEVELOPMENT_RULES.md
 
-> ## AI Development Instruction
->
-> Read the following documents before generating any code:
->
-> 1. PROJECT_OVERVIEW.md
-> 2. ARCHITECTURE_GUIDE.md
-> 3. DEVELOPMENT_RULES.md
->
-> These documents together define the project.
->
-> Do not contradict any instruction written in them.
+# InvestraAI – Development Rules
+
+## Purpose
+
+This document defines the coding standards, architectural principles, and development practices followed throughout the InvestraAI project. These rules ensure the codebase remains clean, modular, maintainable, and scalable as new features are introduced.
 
 ---
 
-# General Rules
+# General Principles
 
-- Implement only the requested feature or milestone.
-- Do not generate the entire project unless explicitly instructed.
-- Do not modify unrelated files.
-- Do not introduce new technologies without permission.
-- Keep every implementation modular and easy to understand.
+The project follows the following software engineering principles:
 
----
-
-# Frontend Rules
-
-- Use React (Vite).
-- Use Functional Components only.
-- Use React Hooks only.
-- Use Tailwind CSS for styling.
-- Use Axios for API communication.
-- Use Recharts for charts.
-- Use Lucide React for icons.
-- Use React Spinners for loading indicators.
-- Build the application as a Single Page Application (SPA).
-- Do not use React Router.
-- Do not use Redux or any other global state library.
-- Keep components reusable and focused on a single responsibility.
+- Keep components small and reusable.
+- Separate business logic from presentation logic.
+- Avoid duplicate code.
+- Prefer readability over clever implementations.
+- Maintain a consistent folder structure.
+- Build reusable modules whenever possible.
+- Keep API responses consistent across the application.
 
 ---
 
-# Backend Rules
+# Frontend Development Rules
 
-- Use Express.js.
-- Follow the Route → Controller → Service architecture.
-- Keep controllers thin.
-- Place business logic inside services.
-- Store API keys in the backend `.env` file.
-- Never expose API keys to the frontend.
-- Validate user input before processing requests.
-- Return structured JSON responses only.
+## Technology Stack
+
+- React (Vite)
+- React Router
+- Axios
+- CSS Modules / Standard CSS
 
 ---
 
-# LangChain Rules
+## Component Guidelines
 
-- Use LangChain.js as a lightweight orchestration layer.
-- Use PromptTemplate.
-- Use structured JSON output.
-- Keep prompts modular.
-- Keep chains simple and easy to understand.
+Each React component should:
 
-Do NOT implement:
+- Have a single responsibility.
+- Be reusable.
+- Receive data through props whenever possible.
+- Avoid unnecessary internal state.
+- Remain easy to test and maintain.
 
-- Agents
-- Memory
-- RAG
-- Tool Calling
-- Multi-step autonomous workflows
+Large UI sections should be divided into smaller components.
 
----
+Example:
 
-# API Rules
-
-Use only the following APIs:
-
-- Google Gemini API
-- Alpha Vantage API
-- NewsAPI
-
-Responsibilities:
-
-- Alpha Vantage → Financial Data
-- NewsAPI → Latest News
-- Gemini → AI Analysis
-
-The LLM should analyze retrieved data, not invent factual information.
+```
+Dashboard
+│
+├── SearchBar
+├── RecommendationCard
+├── CompanyOverview
+├── FinancialSnapshot
+├── ChartsSection
+├── NewsSection
+├── SWOTSection
+├── RiskAssessment
+└── AIResearchPanel
+```
 
 ---
 
-# UI Rules
+## State Management
 
-The interface should:
+Keep state as local as possible.
 
-- Look like a modern SaaS dashboard.
-- Follow the color palette defined in `UI_GUIDELINES.md`.
-- Be responsive.
-- Use reusable cards.
-- Display charts only where meaningful.
-- Prioritize readability over decoration.
+Only store information globally when shared across multiple components.
 
-Avoid unnecessary animations and visual clutter.
+Avoid deeply nested state objects.
 
 ---
 
-# Code Quality Rules
+## API Communication
 
-Write code that is:
+All HTTP requests should be placed inside a dedicated service layer.
 
-- Modular
-- Readable
-- Maintainable
-- Reusable
-- Interview-friendly
+Avoid calling APIs directly inside UI components.
 
-Use meaningful variable and function names.
+Example:
 
-Keep files focused on a single responsibility.
+```
+services/
+    analysisService.js
+```
 
-Avoid duplicate code.
+instead of writing Axios requests inside React components.
+
+---
+
+## UI Rules
+
+Maintain a consistent design language throughout the application.
+
+Use:
+
+- Dark premium fintech theme
+- Rounded cards
+- Consistent spacing
+- Clear typography
+- Subtle animations
+- Responsive layouts
+
+Avoid excessive colors or distracting visual effects.
+
+Charts should remain colorful while preserving readability.
+
+---
+
+# Backend Development Rules
+
+## Technology Stack
+
+- Node.js
+- Express.js
+- LangChain.js
+- Google Gemini
+
+---
+
+## Routing Rules
+
+Routes should only:
+
+- Receive requests
+- Validate input
+- Forward requests to controllers
+
+No business logic should exist inside route files.
+
+---
+
+## Controller Rules
+
+Controllers should:
+
+- Receive validated requests
+- Invoke services
+- Return formatted responses
+- Handle success and error responses
+
+Controllers should remain lightweight.
+
+---
+
+## Service Rules
+
+Business logic belongs exclusively inside services.
+
+Examples include:
+
+- Financial data retrieval
+- Company validation
+- News aggregation
+- AI orchestration
+- Response formatting
+
+Services should never depend on UI logic.
+
+---
+
+## Configuration Rules
+
+All configurable values must remain inside the configuration layer.
+
+Examples:
+
+- API Keys
+- Server Port
+- Environment
+- External API URLs
+
+Hardcoded secrets are strictly prohibited.
+
+---
+
+# API Design Rules
+
+All API responses must follow a consistent structure.
+
+### Success Response
+
+```json
+{
+  "success": true,
+  "data": {}
+}
+```
+
+### Error Response
+
+```json
+{
+  "success": false,
+  "message": "Human-readable error message"
+}
+```
+
+This ensures predictable frontend behavior.
 
 ---
 
 # Error Handling Rules
 
-Handle the following gracefully:
+All unexpected errors must be handled centrally.
 
-- Empty input
-- Invalid company names
-- API failures
-- Network failures
-- Gemini failures
-- Unexpected server errors
+The application should never expose:
 
-Always display user-friendly error messages.
+- Stack traces
+- Internal server paths
+- API secrets
+- Environment variables
 
----
+Instead, return user-friendly messages.
 
-# Documentation Rules
+Examples:
 
-Whenever a feature is completed:
-
-- Ensure it follows the project architecture.
-- Do not change the project scope.
-- Keep the implementation aligned with the documentation.
+- Company not found
+- Unable to retrieve financial data
+- AI analysis temporarily unavailable
+- Network request failed
 
 ---
 
-# Things You Must NOT Do
+# External API Rules
 
-- Do not add authentication.
-- Do not add a database.
-- Do not add search history.
-- Do not add portfolio management.
-- Do not add watchlists.
-- Do not use React Router.
-- Do not use Redux.
-- Do not use AI Agents.
-- Do not introduce unnecessary dependencies.
-- Do not generate placeholder or dummy implementations unless explicitly requested.
+All external services should be accessed through dedicated service modules.
+
+Current integrations include:
+
+- Yahoo Finance
+- Company News API
+- Google Gemini
+
+If a provider fails:
+
+- Log the error.
+- Return a graceful fallback response.
+- Prevent application crashes.
 
 ---
 
-# AI Reminder
+# AI Rules
 
-Before generating code:
+Gemini AI should only analyze verified data.
 
-1. Read `PROJECT_OVERVIEW.md`.
-2. Read `ARCHITECTURE_GUIDE.md`.
-3. Read this document.
-4. Follow the implementation plan.
-5. Generate only the requested milestone.
-6. Keep the solution simple, clean, and production-ready.
+The AI must never:
+
+- Invent financial metrics
+- Fabricate company information
+- Generate unsupported investment claims
+
+Recommendations should always be based on:
+
+- Financial data
+- Historical performance
+- Relevant company news
+
+All AI-generated insights are for educational purposes only.
+
+---
+
+# News Processing Rules
+
+Only display news that is directly related to the selected company.
+
+The application should:
+
+- Filter unrelated articles.
+- Remove duplicate news.
+- Prefer recent and reliable sources.
+- Ignore generic market headlines that are not relevant to the company.
+
+News quality is more important than quantity.
+
+---
+
+# Logging Rules
+
+Use the centralized logger for:
+
+- Server startup
+- API requests
+- External API failures
+- AI execution
+- Validation failures
+- Unexpected errors
+
+Avoid excessive logging in production.
+
+---
+
+# Folder Organization
+
+Every file should belong to a clearly defined module.
+
+```
+controllers/
+middleware/
+routes/
+services/
+utils/
+config/
+langchain/
+```
+
+Frontend:
+
+```
+components/
+pages/
+services/
+hooks/
+assets/
+utils/
+```
+
+Avoid placing unrelated files together.
+
+---
+
+# Naming Conventions
+
+Use meaningful names.
+
+Examples:
+
+Good:
+
+```
+analysisService.js
+financialSnapshot.js
+companyOverview.js
+riskAssessment.js
+```
+
+Avoid:
+
+```
+data.js
+helper.js
+temp.js
+newFile.js
+```
+
+---
+
+# Code Style
+
+Maintain consistent formatting.
+
+- Use descriptive variable names.
+- Keep functions concise.
+- Prefer early returns over deeply nested conditions.
+- Add comments only where necessary to explain non-obvious logic.
+
+Readable code is preferred over complex code.
+
+---
+
+# Performance Guidelines
+
+To provide a smooth user experience:
+
+- Minimize unnecessary API requests.
+- Execute independent API calls in parallel when possible.
+- Avoid blocking the UI during analysis.
+- Display loading indicators for long-running operations.
+- Optimize charts and large datasets.
+
+---
+
+# Git Workflow
+
+Before committing:
+
+- Remove debugging code.
+- Remove unused imports.
+- Ensure environment variables are excluded.
+- Verify application builds successfully.
+- Test major user flows.
+
+Never commit:
+
+- `.env`
+- API keys
+- Temporary files
+- Build artifacts
+
+---
+
+# Future Scalability
+
+The codebase should remain flexible enough to support:
+
+- Authentication
+- Portfolio management
+- Watchlists
+- Multi-company comparison
+- Export to PDF
+- Saved analyses
+- Real-time market updates
+- Additional AI providers
+
+Future features should integrate without requiring major architectural changes.
+
+---
+
+# Development Philosophy
+
+InvestraAI is built with a focus on clean architecture, modular development, and maintainable code. Every feature should prioritize clarity, reliability, and user experience while ensuring the application remains scalable and easy to extend in the future.

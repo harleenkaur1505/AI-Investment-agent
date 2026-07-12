@@ -1,277 +1,383 @@
-# ARCHITECTURE GUIDE
+# ARCHITECTURE.md
 
-> ## AI Development Instruction
->
-> Read `PROJECT_OVERVIEW.md` before reading this document.
->
-> This document defines **how** the project should be built.
->
-> Follow the architecture exactly.
->
-> Do not introduce additional architectural patterns or unnecessary complexity.
+# InvestraAI – System Architecture
+
+## Overview
+
+InvestraAI follows a modern client-server architecture designed to separate the user interface, business logic, AI orchestration, and external data providers. This modular approach improves maintainability, scalability, and future extensibility.
+
+The application enables users to search for a publicly listed company and receive an AI-generated investment research report using live financial data, relevant market news, and Gemini AI analysis.
 
 ---
 
-# Architecture Overview
-
-The application follows a layered architecture.
+# High-Level Architecture
 
 ```
-React Frontend
-      │
-      ▼
-Axios
-      │
-      ▼
-Express Backend
-      │
-      ▼
-Routes
-      │
-      ▼
-Controllers
-      │
-      ▼
-Services
-      │
-      ▼
-LangChain
-      │
-      ▼
-Google Gemini
-      │
-      ▼
-Structured JSON
-      │
-      ▼
-React Dashboard
-```
-
-Each layer has only one responsibility.
-
----
-
-# Project Structure
-
-```
-AI-Investment-Agent/
-
-frontend/
-│
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   │   ├── common/
-│   │   ├── layout/
-│   │   └── dashboard/
-│   ├── hooks/
-│   ├── pages/
-│   ├── services/
-│   ├── utils/
-│   ├── App.jsx
-│   └── main.jsx
-
-backend/
-│
-├── config/
-├── controllers/
-├── routes/
-├── services/
-├── langchain/
-├── middleware/
-├── utils/
-├── server.js
-└── .env
-
-docs/
+                           +----------------------+
+                           |      React (Vite)    |
+                           |     Frontend UI      |
+                           +----------+-----------+
+                                      |
+                           HTTPS REST API Requests
+                                      |
+                                      ▼
+                        +----------------------------+
+                        |   Express.js Backend API   |
+                        +------------+---------------+
+                                     |
+               ------------------------------------------------
+              |                  |                 |            |
+              ▼                  ▼                 ▼            ▼
+      Yahoo Finance         News Service      Gemini AI      Validation
+      Financial Data          (Relevant)      (LangChain)     Middleware
+              |                  |                 |
+              -------------------|-----------------
+                                  |
+                                  ▼
+                     Analysis & Recommendation Engine
+                                  |
+                                  ▼
+                           Structured JSON Response
+                                  |
+                                  ▼
+                           React Dashboard UI
 ```
 
 ---
 
-# Folder Responsibilities
+# Architecture Layers
 
-## Frontend
+## 1. Presentation Layer (Frontend)
 
-| Folder | Responsibility |
-|---------|----------------|
-| components | Reusable UI components |
-| layout | Navbar, Footer, Layout |
-| dashboard | Dashboard cards and charts |
-| services | Axios API calls |
-| hooks | Custom React hooks |
-| utils | Helper functions |
-| assets | Images and static assets |
+Technology:
+- React (Vite)
+- React Router
+- Axios
+
+Responsibilities:
+
+- Responsive user interface
+- Company search
+- API communication
+- Loading states
+- Error handling
+- Dashboard rendering
+- Charts and visualizations
+- SWOT display
+- Risk assessment display
+- AI recommendation visualization
+
+The frontend never communicates directly with external APIs.
+
+All requests pass through the backend.
 
 ---
 
-## Backend
+## 2. API Layer (Backend)
 
-| Folder | Responsibility |
-|---------|----------------|
-| routes | API endpoints |
-| controllers | Handle requests and responses |
-| services | Business logic |
-| langchain | AI orchestration |
-| middleware | Express middleware |
-| utils | Helper functions |
-| config | Configuration files |
+Technology:
+
+- Node.js
+- Express.js
+
+Responsibilities:
+
+- Accept client requests
+- Validate user input
+- Coordinate data collection
+- Handle errors
+- Call AI services
+- Format responses
+- Return standardized JSON
+
+The backend acts as the single source of truth for all business logic.
+
+---
+
+## 3. Service Layer
+
+The service layer contains the application's core logic.
+
+Main responsibilities:
+
+- Retrieve company information
+- Retrieve financial metrics
+- Retrieve historical market data
+- Retrieve relevant company news
+- Prepare prompts for Gemini AI
+- Merge all responses
+- Generate structured investment report
+
+Business logic is isolated from routing logic for easier maintenance.
+
+---
+
+## 4. AI Layer
+
+Technology:
+
+- Google Gemini
+- LangChain.js
+
+Responsibilities:
+
+Generate:
+
+- Investment Recommendation
+- Executive Summary
+- SWOT Analysis
+- Risk Assessment
+- AI Reasoning
+
+The AI never invents company data.
+
+It only analyzes information collected from trusted external sources.
+
+---
+
+## 5. External Data Sources
+
+### Yahoo Finance
+
+Provides:
+
+- Company Profile
+- Market Capitalization
+- Revenue
+- EPS
+- P/E Ratio
+- Historical Prices
+- Financial Ratios
+- Trading Metrics
+
+---
+
+### News Provider
+
+Provides:
+
+- Recent company news
+- Market developments
+- Earnings updates
+- Product announcements
+- Mergers
+- Leadership changes
+
+Only news directly related to the selected company is used during analysis.
+
+Irrelevant news articles are filtered before being passed to the AI.
+
+---
+
+## 6. Configuration Layer
+
+Environment variables store:
+
+- Gemini API Key
+- News API Key
+- Server Port
+- Runtime Configuration
+
+Sensitive credentials are never committed to version control.
 
 ---
 
 # Request Flow
 
-Every request must follow this sequence.
+## Step 1
+
+User enters
 
 ```
-React
-
-↓
-
-Axios
-
-↓
-
-Express Route
-
-↓
-
-Controller
-
-↓
-
-Service
-
-↓
-
-Alpha Vantage API
-
-↓
-
-NewsAPI
-
-↓
-
-LangChain
-
-↓
-
-Google Gemini
-
-↓
-
-Structured JSON
-
-↓
-
-React
+Apple
 ```
 
-No layer should be skipped.
-
----
-
-# Component Structure
-
-The frontend should contain reusable components.
+or
 
 ```
-Layout
-│
-├── Navbar
-│
-├── Hero
-│
-├── Search Section
-│
-├── Loading Component
-│
-└── Dashboard
-      │
-      ├── Recommendation Card
-      ├── Company Overview
-      ├── Financial Snapshot
-      ├── Financial Charts
-      ├── News Section
-      ├── SWOT Analysis
-      ├── Risk Analysis
-      └── AI Reasoning
+AAPL
 ```
 
-Each dashboard section should be an independent reusable component.
+---
+
+## Step 2
+
+Frontend sends
+
+```
+POST /analyze
+```
 
 ---
 
-# Third-Party Libraries
+## Step 3
 
-| Purpose | Library |
-|----------|----------|
-| UI | React (Vite) |
-| Styling | Tailwind CSS |
-| HTTP Requests | Axios |
-| Charts | Recharts |
-| Icons | Lucide React |
-| Loading | React Spinners |
-| AI | LangChain.js |
-| LLM | Google Gemini |
-| Financial Data | Alpha Vantage API |
-| News | NewsAPI |
+Backend validates input.
 
-Do not replace these libraries unless explicitly instructed.
+Invalid requests immediately return:
+
+```
+400 Bad Request
+```
 
 ---
 
-# State Management
+## Step 4
 
-Use only React Hooks.
+Backend fetches
 
-Allowed:
-
-- useState
-- useEffect
-
-Do not use:
-
-- Redux
-- Zustand
-- Context API (unless absolutely required)
-
-Keep state as local as possible.
+- Company Profile
+- Financial Data
+- Historical Prices
+- Relevant News
 
 ---
 
-# Security
+## Step 5
 
-- Store all API keys in the backend `.env` file.
-- Never expose API keys to the frontend.
-- React should communicate only with the Express backend.
-- Gemini, Alpha Vantage, and NewsAPI must only be called from the backend.
+Collected information is formatted into a structured prompt.
 
 ---
 
-# Coding Principles
+## Step 6
 
-The project should prioritize:
+Gemini AI analyzes
 
-- Clean architecture
-- Modular components
-- Reusable code
-- Readability
-- Simplicity
-- Maintainability
-
-Avoid unnecessary abstractions.
-
-Build only what is required.
+- Business overview
+- Financial health
+- Market sentiment
+- Risks
+- Opportunities
 
 ---
 
-# AI Reminder
+## Step 7
 
-When generating code:
+Backend combines
 
-- Follow this architecture.
-- Respect folder responsibilities.
-- Do not move business logic into React components.
-- Do not call external APIs directly from React.
-- Generate modular and interview-friendly code.
+Financial Data
+
++
+
+AI Analysis
+
++
+
+News
+
+into one standardized JSON response.
+
+---
+
+## Step 8
+
+Frontend renders
+
+- Recommendation
+- Executive Summary
+- Company Overview
+- Financial Snapshot
+- Charts
+- News
+- SWOT
+- Risk Assessment
+
+---
+
+# Folder Structure
+
+```
+frontend/
+│
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── pages/
+│   ├── services/
+│   ├── hooks/
+│   ├── context/
+│   ├── utils/
+│   └── App.jsx
+│
+└── package.json
+
+backend/
+│
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── routes/
+│   ├── services/
+│   ├── langchain/
+│   ├── utils/
+│   └── index.js
+│
+├── .env
+└── package.json
+```
+
+---
+
+# Design Principles
+
+The architecture follows:
+
+- Separation of Concerns
+- Modular Design
+- Reusable Components
+- Scalable Folder Structure
+- Centralized Configuration
+- API-First Development
+- Maintainable Business Logic
+- Secure Environment Variable Management
+
+---
+
+# Error Handling Strategy
+
+The backend handles:
+
+- Invalid company names
+- Missing API keys
+- External API failures
+- Network errors
+- AI generation failures
+- Validation errors
+
+Each error returns a structured JSON response that the frontend displays through user-friendly error messages.
+
+---
+
+# Security Considerations
+
+- Environment variables stored in `.env`
+- API keys never exposed to the frontend
+- Input validation on all requests
+- Centralized error handling
+- No sensitive information returned to clients
+
+---
+
+# Future Enhancements
+
+The architecture is designed to support future features without major restructuring.
+
+Potential additions include:
+
+- Company comparison
+- Portfolio tracking
+- User authentication
+- Watchlists
+- PDF report export
+- Investment history
+- Saved analyses
+- Real-time stock updates
+- Email report generation
+- Multi-company AI comparison
+
+---
+
+# Architecture Summary
+
+InvestraAI uses a modular, scalable architecture where React provides the user interface, Express manages application logic, Yahoo Finance supplies financial data, relevant news services provide market context, and Gemini AI generates investment insights. This layered design ensures clean separation of responsibilities, maintainability, and an intuitive experience while keeping the system flexible for future enhancements.
