@@ -209,7 +209,11 @@ function App() {
             )}
 
             {/* Active Loading Checklist */}
-            {loading && <LoadingProgress activeStep={activeStep} />}
+            {loading && (
+              <div className="flex flex-col items-center justify-center h-[calc(100vh-8rem)] w-full">
+                <LoadingProgress activeStep={activeStep} />
+              </div>
+            )}
 
             {/* Verification Failures & Errors */}
             {error && (
