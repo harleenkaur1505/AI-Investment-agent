@@ -19,6 +19,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Root welcome endpoint
+app.get('/', (req, res) => {
+  res.json({ success: true, message: 'InvestraAI API is running' });
+});
+
 // Register routes
 app.use('/api', healthRoutes);
 app.use('/api', analysisRoutes);
