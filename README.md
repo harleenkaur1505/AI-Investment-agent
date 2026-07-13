@@ -82,6 +82,11 @@ The dashboard displays company information, financial metrics, charts, and recen
 
 ![Dashboard](./screenshots/dashboard.png)
 
+### AI Analysis
+The AI-generated analysis summarizes the company's financial health, news sentiment, risks, opportunities, and investment recommendation.
+
+![AI Analysis](./screenshots/analysis.png)
+
 ---
 
 ## 📂 Project Structure
