@@ -97,6 +97,7 @@ AI-Investment-Agent/
 ├── frontend/
 ├── backend/
 ├── docs/
+├── screenshots/
 └── README.md
 ```
 
