@@ -70,6 +70,17 @@ Finance           (LangChain)
         ▼
 AI Investment Report
 ```
+## 📸 Screenshots
+
+### Landing Page
+The landing page provides an overview of the application and allows users to search for a company.
+
+![Landing Page](./screenshots/landing-page.png)
+
+### Dashboard
+The dashboard displays company information, financial metrics, charts, and recent news.
+
+![Dashboard](./screenshots/dashboard.png)
 
 ---
 
